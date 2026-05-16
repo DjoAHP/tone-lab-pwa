@@ -5,6 +5,10 @@ node_modules/
 dist/
 .vite/
 
+# Icon generation scripts
+generate-icons.js
+generate-icons.mjs
+
 # Environment
 .env
 .env.local
