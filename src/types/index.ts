@@ -128,6 +128,18 @@ export interface AppState {
   // Chrono (synchronisé avec chronoService)
   isChronoRunning: boolean;
   chronoElapsedMs: number;
+  // DocV Audio YouTube (NOUVEAU)
+  docvAudioUrl: string | null;
+  docvAudioPlaying: boolean;
+  docvAudioCurrentTime: number;
+  docvAudioDuration: number;
+  // Actions Audio YouTube
+  setDocvAudioUrl: (url: string | null) => void;
+  setDocvAudioPlaying: (playing: boolean) => void;
+  setDocvAudioTime: (time: number, duration: number) => void;
+  playPauseYouTubeAudio: () => void;
+  seekYouTubeAudio: (delta: number) => void;
+  registerYouTubePlayer: (player: any) => void;
 }
 
 // Types pour DocV

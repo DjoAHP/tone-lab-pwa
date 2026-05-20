@@ -11,6 +11,7 @@ import { DiapaTool } from "./components/DiapaTool";
 import { SetlistTool } from "./components/SetlistTool";
 import { ChronoTool } from "./components/ChronoTool";
 import { DocVTool } from "./components/DocVTool";
+import { DocVAudioSidebar } from "./components/DocVAudioSidebar";
 import { BottomBar } from "./components/BottomBar";
 import { NewStackModal } from "./components/NewStackModal";
 import { useApp } from "./context/AppContext";
@@ -55,6 +56,9 @@ function AppInner() {
           {ongletActif === "docv" && projet && <DocVTool />}
           {ongletActif === "stack" && projet && <SoundResearchTool />}
         </main>
+
+        {/* DROITE : Sidebar lecteur audio YouTube (uniquement DocV) */}
+        {ongletActif === "docv" && <DocVAudioSidebar />}
       </div>
 
       <BottomBar />

@@ -201,6 +201,9 @@ export function useAppStore() {
     };
   });
 
+    // Référence du player YouTube
+    const youtubePlayerRef = React.useRef<any>(null);
+
   useEffect(() => {
     fetchPlugins().then((plugins) => {
       setState((prev) => ({ ...prev, plugins, pluginsLoading: false }));
@@ -461,6 +464,40 @@ export function useAppStore() {
   const clearDocvFiles = useCallback(() => {
     mettreAJourEtat({ docvFiles: null, docvSelectedFile: null, modifie: true });
   }, [mettreAJourEtat]);
+
+  // ── Actions Lecteur Audio YouTube (DocV) ──────────────
+  const setDocvAudioUrl = useCallback((url: string | null) => {
+    mettreAJourEtat({ docvAudioUrl: url, modifie: true });
+  }, [mettreAJourEtat]);
+
+  const setDocvAudioPlaying = useCallback((playing: boolean) => {
+    mettreAJourEtat({ docvAudioPlaying: playing, modifie: true });
+  }, [mettreAJourEtat]);
+
+  const setDocvAudioTime = useCallback((time: number, duration: number) => {
+    mettreAJourEtat({ docvAudioCurrentTime: time, docvAudioDuration: duration, modifie: true });
+  }, [mettreAJourEtat]);
+
+  const playPauseYouTubeAudio = useCallback(() => {
+    if (!youtubePlayerRef.current) return;
+    const player = youtubePlayerRef.current;
+    if (state.docvAudioPlaying) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
+  }, [state.docvAudioPlaying]);
+
+  const seekYouTubeAudio = useCallback((delta: number) => {
+    if (!youtubePlayerRef.current) return;
+    const player = youtubePlayerRef.current;
+    const currentTime = player.getCurrentTime();
+    player.seekTo(currentTime + delta, true);
+  }, []);
+
+  const registerYouTubePlayer = useCallback((player: any) => {
+    youtubePlayerRef.current = player;
+  }, []);
 
   // ── Projet ───────────────────────────────────────────────────
   const nouveauProjet = useCallback(
@@ -1231,6 +1268,18 @@ const setSetlistSidebarWidth = useCallback((width: number) => {    mettreAJourEt
     setDocvSidebarWidth,
     addDocvFiles,
     clearDocvFiles,
+    // DocV Audio YouTube
+    docvAudioUrl: state.docvAudioUrl,
+    setDocvAudioUrl,
+    docvAudioPlaying: state.docvAudioPlaying,
+    setDocvAudioPlaying,
+    docvAudioCurrentTime: state.docvAudioCurrentTime,
+    docvAudioDuration: state.docvAudioDuration,
+    setDocvAudioTime,
+    playPauseYouTubeAudio,
+    seekYouTubeAudio,
+    registerYouTubePlayer,
+
     // Plugins
     ajouterPlugin,
     supprimerPlugin,
