@@ -1,6 +1,6 @@
 // src/store/useAppStore.ts
 
-import { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import type {
   AppState,
   ToneLabProject,
@@ -198,6 +198,11 @@ export function useAppStore() {
       // Chrono (synchronisé avec chronoService)
       isChronoRunning: false,
       chronoElapsedMs: 0,
+      // DocV Audio YouTube
+      docvAudioUrl: null,
+      docvAudioPlaying: false,
+      docvAudioCurrentTime: 0,
+      docvAudioDuration: 0,
     };
   });
 
